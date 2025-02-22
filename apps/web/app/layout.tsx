@@ -4,8 +4,6 @@ import { cn } from '@repo/design-system/lib/utils';
 import '@repo/design-system/styles/globals.css';
 import { Toolbar } from '@repo/feature-flags/components/toolbar';
 import type { ReactNode } from 'react';
-import { Footer } from './components/footer';
-import { Header } from './components/header';
 import './styles/web.css';
 
 type RootLayoutProperties = {
@@ -19,11 +17,7 @@ const RootLayout = ({ children }: RootLayoutProperties) => (
     suppressHydrationWarning
   >
     <body>
-      <DesignSystemProvider>
-        <Header />
-        {children}
-        <Footer />
-      </DesignSystemProvider>
+      <DesignSystemProvider>{children}</DesignSystemProvider>
       <Toolbar />
     </body>
   </html>

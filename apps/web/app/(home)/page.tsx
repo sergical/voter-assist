@@ -1,39 +1,19 @@
-import { showBetaFeature } from '@repo/feature-flags';
+import { Conversation } from '@/components/conversation';
 import { createMetadata } from '@repo/seo/metadata';
 import type { Metadata } from 'next';
-import { Cases } from './components/cases';
-import { CTA } from './components/cta';
-import { FAQ } from './components/faq';
-import { Features } from './components/features';
-import { Hero } from './components/hero';
-import { Stats } from './components/stats';
-import { Testimonials } from './components/testimonials';
 
 const meta = {
-  title: 'From zero to production in minutes.',
+  title: 'VoterAssist',
   description:
-    "next-forge is a production-grade boilerplate for modern Next.js apps. It's designed to have everything you need to build your new SaaS app as quick as possible. Authentication, billing, analytics, SEO, and more. It's all here.",
+    'Multi-modal assistant for voter information including: where, when, and how to vote. Available in as many languages as possible to maximize accessibility in multi-lingual and multi-cultural communities. Will eventually also provide neutral information for candidates’ views/policies on any topic of interest.',
 };
 
 export const metadata: Metadata = createMetadata(meta);
 
-const Home = async () => {
-  const betaFeature = await showBetaFeature();
-
+const Home = () => {
   return (
     <>
-      {betaFeature && (
-        <div className="w-full bg-black py-2 text-center text-white">
-          Beta feature now available
-        </div>
-      )}
-      <Hero />
-      <Cases />
-      <Features />
-      <Stats />
-      <Testimonials />
-      <FAQ />
-      <CTA />
+      <Conversation />
     </>
   );
 };
