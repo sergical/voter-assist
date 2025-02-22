@@ -42,6 +42,7 @@ import {
   ChevronRightIcon,
   FolderIcon,
   FrameIcon,
+  HomeIcon,
   LifeBuoyIcon,
   MapIcon,
   MoreHorizontalIcon,
@@ -67,6 +68,12 @@ const data = {
     avatar: '/avatars/shadcn.jpg',
   },
   navMain: [
+    {
+      title: 'Home',
+      url: '/',
+      icon: HomeIcon,
+      isActive: true,
+    },
     {
       title: 'Playground',
       url: '#',
