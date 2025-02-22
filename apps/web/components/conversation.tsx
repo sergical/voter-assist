@@ -82,14 +82,10 @@ export function Conversation() {
 
   return (
     <div className="mx-auto w-full max-w-[500px] p-4">
-      <div className="rounded-3xl bg-card p-6 shadow-lg">
-        <div className="flex items-center gap-4">
+      <div className="rounded-3xl">
+        <div className="flex items-center justify-center gap-4">
           <div className="flex-1">
-            <h2 className="mb-2 font-semibold text-card-foreground text-xl">
-              Need help?
-            </h2>
-
-            <div className="flex items-center gap-4">
+            <div className="flex items-center justify-center gap-4">
               {/* Voice Chat Button */}
               <Button
                 variant={
@@ -152,7 +148,7 @@ export function Conversation() {
         {/* Status Messages (only show when relevant) */}
         {(conversation.status !== 'disconnected' ||
           conversation.isSpeaking) && (
-          <div className="mt-4 text-muted-foreground text-sm">
+          <div className="mt-4 text-center text-muted-foreground text-sm">
             {conversation.status === 'connecting' && <p>Connecting...</p>}
             {conversation.status === 'connected' && (
               <p>
