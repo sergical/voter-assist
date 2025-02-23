@@ -2,13 +2,20 @@
 import { useConversation } from '@11labs/react';
 import { Button } from '@repo/design-system/components/ui/button';
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@repo/design-system/components/ui/dialog';
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@repo/design-system/components/ui/dropdown-menu';
-import { Check, Phone, PhoneOff } from 'lucide-react';
-import { useCallback, useState } from 'react';
+import { Check, MapIcon, Phone, PhoneOff } from 'lucide-react';
+import { useCallback, useEffect, useState } from 'react';
+import { GoogleMap } from './map/google-map';
 
 const languages = [
   {
@@ -38,13 +45,110 @@ const languages = [
   },
 ];
 
+// Define the voting location type
+type VotingLocation = {
+  name: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  distance?: number;
+};
+
+// VotingLocationMap component
+function VotingLocationMap({
+  location,
+  isOpen,
+  onClose,
+}: {
+  location: VotingLocation | null;
+  isOpen: boolean;
+  onClose: () => void;
+}) {
+  const [userLocation, setUserLocation] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null);
+
+  useEffect(() => {
+    if (isOpen && location && !userLocation) {
+      // Get user's location when modal opens
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+        }
+      );
+    }
+  }, [isOpen, location, userLocation]);
+
+  const handleDistanceCalculated = useCallback(
+    (distance: number) => {
+      if (location) {
+        location.distance = distance;
+      }
+    },
+    [location]
+  );
+
+  if (!location) return null;
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-[600px]">
+        <DialogHeader>
+          <DialogTitle>{location.name}</DialogTitle>
+        </DialogHeader>
+        <div className="h-[400px] w-full rounded-md border">
+          <GoogleMap
+            location={location}
+            userLocation={userLocation}
+            onDistanceCalculated={handleDistanceCalculated}
+          />
+          <div className="p-4">
+            <p className="mb-2">{location.address}</p>
+            {location.distance && (
+              <p className="text-muted-foreground text-sm">
+                Distance: {location.distance.toFixed(1)} km
+              </p>
+            )}
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 export function Conversation() {
   const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
+  const [votingLocation, setVotingLocation] = useState<VotingLocation | null>(
+    null
+  );
+  const [isMapOpen, setIsMapOpen] = useState(false);
+
   const conversation = useConversation({
     onConnect: () => console.log('Connected'),
     onDisconnect: () => console.log('Disconnected'),
     onMessage: (message: string) => console.log('Message:', message),
     onError: (error: Error) => console.error('Error:', error),
+    clientTools: {
+      showVotingLocation: ({ location }: { location: VotingLocation }) => {
+        setVotingLocation(location);
+        setIsMapOpen(true);
+        return { success: true, message: 'Map displayed successfully' };
+      },
+      hideVotingLocation: () => {
+        setIsMapOpen(false);
+        return { success: true, message: 'Map hidden successfully' };
+      },
+      getCurrentVotingLocation: () => {
+        return votingLocation;
+      },
+    },
   });
 
   const getSignedUrl = useCallback(async (): Promise<string> => {
@@ -80,6 +184,19 @@ export function Conversation() {
     await conversation.endSession();
   }, [conversation]);
 
+  // Example voting location (replace with actual data from your backend)
+  const exampleLocation: VotingLocation = {
+    name: 'City Hall Voting Center',
+    address: '100 Queen Street West, Toronto, ON M5H 2N2',
+    latitude: 43.6534,
+    longitude: -79.3841,
+  };
+
+  const showVotingLocation = useCallback(() => {
+    setVotingLocation(exampleLocation);
+    setIsMapOpen(true);
+  }, []);
+
   return (
     <div className="mx-auto w-full max-w-[500px] p-4">
       <div className="rounded-3xl">
@@ -114,6 +231,16 @@ export function Conversation() {
                 )}
               </Button>
 
+              {/* Map Button */}
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-10 w-10 rounded-full"
+                onClick={showVotingLocation}
+              >
+                <MapIcon className="h-5 w-5" />
+              </Button>
+
               {/* Language Selector */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -145,7 +272,7 @@ export function Conversation() {
           </div>
         </div>
 
-        {/* Status Messages (only show when relevant) */}
+        {/* Status Messages */}
         {(conversation.status !== 'disconnected' ||
           conversation.isSpeaking) && (
           <div className="mt-4 text-center text-muted-foreground text-sm">
@@ -160,6 +287,13 @@ export function Conversation() {
           </div>
         )}
       </div>
+
+      {/* Voting Location Map Modal */}
+      <VotingLocationMap
+        location={votingLocation}
+        isOpen={isMapOpen}
+        onClose={() => setIsMapOpen(false)}
+      />
     </div>
   );
 }
