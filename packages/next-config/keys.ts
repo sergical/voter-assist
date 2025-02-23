@@ -17,6 +17,7 @@ export const keys = () =>
       NEXT_PUBLIC_API_URL: z.string().min(1).url().optional(),
       NEXT_PUBLIC_DOCS_URL: z.string().min(1).url().optional(),
       NEXT_PUBLIC_AGENT_ID: z.string().min(1),
+      NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: z.string().min(1),
     },
     runtimeEnv: {
       ANALYZE: process.env.ANALYZE,
@@ -27,5 +28,7 @@ export const keys = () =>
       NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
       NEXT_PUBLIC_DOCS_URL: process.env.NEXT_PUBLIC_DOCS_URL,
       NEXT_PUBLIC_AGENT_ID: process.env.NEXT_PUBLIC_AGENT_ID,
+      NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:
+        process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
     },
   });

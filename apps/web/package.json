@@ -12,6 +12,7 @@
   "dependencies": {
     "@11labs/react": "^0.0.7",
     "@arcjet/next": "1.0.0-beta.2",
+    "@googlemaps/js-api-loader": "^1.16.8",
     "@number-flow/react": "^0.5.5",
     "@radix-ui/react-icons": "^1.3.2",
     "@repo/design-system": "workspace:*",
@@ -25,6 +26,7 @@
     "@repo/tailwind-config": "workspace:*",
     "@sentry/nextjs": "^9.1.0",
     "@t3-oss/env-nextjs": "^0.12.0",
+    "@types/google.maps": "^3.58.1",
     "cobe": "^0.6.3",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.4.7",
