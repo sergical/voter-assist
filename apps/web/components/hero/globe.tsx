@@ -30,37 +30,35 @@ export const Globe = () => {
       globeRef.current.pointOfView({
         lat: 51.2538,
         lng: -85.3232,
-        altitude: 2.5,
+        altitude: 2,
       });
     }
   }, []);
 
   return (
-    <div className="relative mx-auto w-full" ref={containerRef}>
-      <div className="aspect-1 sm:aspect-square">
-        <ReactGlobe
-          ref={globeRef}
-          width={containerRef.current?.clientWidth}
-          height={containerRef.current?.clientHeight}
-          globeImageUrl={
-            isDark
-              ? '//unpkg.com/three-globe/example/img/earth-dark.jpg'
-              : '//unpkg.com/three-globe/example/img/earth-blue-marble.jpg'
-          }
-          backgroundColor="rgba(0,0,0,0)"
-          pointsData={MARKERS}
-          pointLat="lat"
-          pointLng="lng"
-          pointColor={() => '#1E90FF'}
-          pointAltitude={0.01}
-          pointRadius="size"
-          animateIn={true}
-          atmosphereColor="#1E90FF"
-          atmosphereAltitude={0.1}
-          pointsMerge={true}
-          enablePointerInteraction={false}
-        />
-      </div>
+    <div className="w-full" ref={containerRef}>
+      <ReactGlobe
+        ref={globeRef}
+        globeImageUrl={
+          isDark
+            ? '//unpkg.com/three-globe/example/img/earth-dark.jpg'
+            : '//unpkg.com/three-globe/example/img/earth-blue-marble.jpg'
+        }
+        width={containerRef.current?.clientWidth || 992}
+        height={containerRef.current?.clientHeight || 992}
+        backgroundColor="rgba(0,0,0,0)"
+        pointsData={MARKERS}
+        pointLat="lat"
+        pointLng="lng"
+        pointColor={() => '#1E90FF'}
+        pointAltitude={0.01}
+        pointRadius="size"
+        animateIn={true}
+        atmosphereColor="#1E90FF"
+        atmosphereAltitude={0.1}
+        pointsMerge={true}
+        enablePointerInteraction={false}
+      />
     </div>
   );
 };

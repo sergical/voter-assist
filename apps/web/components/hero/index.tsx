@@ -1,12 +1,19 @@
 'use client';
+
 import { ModeToggle } from '@repo/design-system/components/mode-toggle';
 import { differenceInSeconds } from 'date-fns';
 import { motion } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { Conversation } from '../conversation';
 import { Countdown } from './countdown';
-import { Globe } from './globe';
+import { GlobeLoading } from './globe-loading';
 import { Stats } from './stats';
+
+const DynamicGlobe = dynamic(() => import('./globe').then((mod) => mod.Globe), {
+  ssr: false,
+  loading: () => <GlobeLoading />,
+});
 
 const ELECTION_DATE = new Date('2025-02-27');
 
@@ -64,7 +71,7 @@ export const LandingHero = () => {
       <div className="flex w-full max-w-5xl flex-col items-center gap-8 px-4 md:flex-row md:items-start md:gap-12">
         <div className="relative flex w-full flex-col items-center justify-center">
           <Stats />
-          <Globe />
+          <DynamicGlobe />
         </div>
       </div>
     </div>
