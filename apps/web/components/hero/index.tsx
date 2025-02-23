@@ -17,7 +17,9 @@ const DynamicGlobe = dynamic(() => import('./globe').then((mod) => mod.Globe), {
 
 const ELECTION_DATE = new Date('2025-02-27');
 
-export const LandingHero = () => {
+export const LandingHero = ({
+  initialLanguage,
+}: { initialLanguage: string }) => {
   const [secondsLeft, setSecondsLeft] = useState(0);
 
   useEffect(() => {
@@ -65,7 +67,7 @@ export const LandingHero = () => {
         transition={{ duration: 0.5, delay: 0.4 }}
         className="mb-16 w-full max-w-3xl px-4"
       >
-        <Conversation />
+        <Conversation initialLanguage={initialLanguage} />
       </motion.div>
 
       <div className="flex w-full max-w-5xl flex-col items-center gap-8 px-4 md:flex-row md:items-start md:gap-12">

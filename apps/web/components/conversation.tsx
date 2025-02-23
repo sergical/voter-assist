@@ -13,7 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@repo/design-system/components/ui/dropdown-menu';
-import { Check, MapIcon, Phone, PhoneOff } from 'lucide-react';
+import { Check, Phone, PhoneOff } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { GoogleMap } from './map/google-map';
 
@@ -44,6 +44,12 @@ const languages = [
     flag: '🇺🇦',
   },
 ];
+
+const getDefaultLanguage = (initialLanguage: string) => {
+  return (
+    languages.find((lang) => lang.value === initialLanguage) || languages[0]
+  );
+};
 
 // Define the voting location type
 type VotingLocation = {
@@ -103,19 +109,19 @@ function VotingLocationMap({
         <DialogHeader>
           <DialogTitle>{location.name}</DialogTitle>
         </DialogHeader>
-        <div className="h-[400px] w-full rounded-md border">
-          <GoogleMap
-            location={location}
-            userLocation={userLocation}
-            onDistanceCalculated={handleDistanceCalculated}
-          />
-          <div className="p-4">
-            <p className="mb-2">{location.address}</p>
+        <div className="h-fit w-full">
+          <p className="mb-2">{location.address}</p>
+          <p className="mb-2 h-5 text-muted-foreground text-sm">
             {location.distance && (
-              <p className="text-muted-foreground text-sm">
-                Distance: {location.distance.toFixed(1)} km
-              </p>
+              <>Distance: {location.distance.toFixed(1)} km</>
             )}
+          </p>
+          <div className="h-[400px] w-full">
+            <GoogleMap
+              location={location}
+              userLocation={userLocation}
+              onDistanceCalculated={handleDistanceCalculated}
+            />
           </div>
         </div>
       </DialogContent>
@@ -123,8 +129,14 @@ function VotingLocationMap({
   );
 }
 
-export function Conversation() {
-  const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
+export function Conversation({
+  initialLanguage,
+}: {
+  initialLanguage: string;
+}) {
+  const [selectedLanguage, setSelectedLanguage] = useState(() =>
+    getDefaultLanguage(initialLanguage)
+  );
   const [votingLocation, setVotingLocation] = useState<VotingLocation | null>(
     null
   );
@@ -139,11 +151,9 @@ export function Conversation() {
       showVotingLocation: ({ location }: { location: VotingLocation }) => {
         setVotingLocation(location);
         setIsMapOpen(true);
-        return { success: true, message: 'Map displayed successfully' };
       },
       hideVotingLocation: () => {
         setIsMapOpen(false);
-        return { success: true, message: 'Map hidden successfully' };
       },
       getCurrentVotingLocation: () => {
         return votingLocation;
@@ -231,15 +241,15 @@ export function Conversation() {
                 )}
               </Button>
 
-              {/* Map Button */}
-              <Button
+              {/* Map Button - don't show */}
+              {/* <Button
                 variant="outline"
                 size="icon"
                 className="h-10 w-10 rounded-full"
                 onClick={showVotingLocation}
               >
                 <MapIcon className="h-5 w-5" />
-              </Button>
+              </Button> */}
 
               {/* Language Selector */}
               <DropdownMenu>
