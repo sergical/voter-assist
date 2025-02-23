@@ -1,6 +1,7 @@
 import { LandingHero } from '@/components/hero/index';
 import { createMetadata } from '@repo/seo/metadata';
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 
 const meta = {
   title: 'Learn about your local elections',
@@ -10,8 +11,20 @@ const meta = {
 
 export const metadata: Metadata = createMetadata(meta);
 
-const Home = () => {
-  return <LandingHero />;
+// Function to parse Accept-Language header
+const parseAcceptLanguage = (acceptLanguage: string | null): string => {
+  if (!acceptLanguage) return 'en';
+
+  // Get first language from Accept-Language header
+  const firstLang = acceptLanguage.split(',')[0].trim().split('-')[0];
+  return firstLang;
 };
 
-export default Home;
+export default async function Home() {
+  const headersList = await headers();
+  const acceptLanguage = headersList.get('accept-language') || '';
+
+  const initialLanguage = parseAcceptLanguage(acceptLanguage);
+
+  return <LandingHero initialLanguage={initialLanguage} />;
+}

@@ -18,46 +18,46 @@ export const Countdown = ({ seconds }: CountdownProps) => {
           fontVariantNumeric: 'tabular-nums',
           ['--number-flow-char-height' as string]: '0.85em',
         }}
-        className="flex flex-wrap items-baseline justify-center gap-2 font-semibold"
+        className="flex flex-wrap items-baseline justify-center gap-4 font-semibold"
       >
-        <div className="flex items-baseline">
+        <div className="flex flex-col items-center">
           <NumberFlow
             trend={-1}
             value={dd}
             format={{ minimumIntegerDigits: 2 }}
             className="text-4xl text-foreground"
           />
-          <span className="text-muted-foreground text-sm">d</span>
+          <span className="text-muted-foreground text-sm">days</span>
         </div>
-        <div className="flex items-baseline">
+        <div className="flex flex-col items-center">
           <NumberFlow
             trend={-1}
             value={hh}
             format={{ minimumIntegerDigits: 2 }}
             className="text-4xl text-foreground"
           />
-          <span className="text-muted-foreground text-sm">h</span>
+          <span className="text-muted-foreground text-sm">hours</span>
         </div>
-        <div className="flex items-baseline">
-          <div className="flex items-baseline">
+        <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center">
             <NumberFlow
               trend={-1}
               value={mm}
               format={{ minimumIntegerDigits: 2 }}
               className="text-4xl text-foreground"
             />
-            <span className="text-muted-foreground text-sm">m</span>
+            <span className="text-muted-foreground text-sm">minutes</span>
           </div>
         </div>
         <div className="flex flex-col items-center">
-          <div className="flex items-baseline">
+          <div className="flex flex-col items-center">
             <NumberFlow
               trend={-1}
               value={ss}
               format={{ minimumIntegerDigits: 2 }}
               className="text-4xl text-foreground"
             />
-            <span className="text-muted-foreground text-sm">s</span>
+            <span className="text-muted-foreground text-sm">seconds</span>
           </div>
         </div>
       </div>
