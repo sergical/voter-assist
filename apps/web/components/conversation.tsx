@@ -191,6 +191,9 @@ export function Conversation({
             language: selectedLanguage.value,
           },
         },
+        dynamicVariables: {
+          currentDate: new Date().toLocaleDateString(),
+        },
       });
     } catch (error) {
       console.error('Failed to start conversation:', error);
