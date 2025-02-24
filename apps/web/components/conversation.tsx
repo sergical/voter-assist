@@ -23,7 +23,7 @@ const languages = [
   {
     value: 'en',
     label: 'English',
-    flag: '🇺🇸',
+    flag: '🇨🇦',
   },
   {
     value: 'es',
@@ -190,6 +190,9 @@ export function Conversation({
           agent: {
             language: selectedLanguage.value,
           },
+        },
+        dynamicVariables: {
+          currentDate: new Date().toLocaleDateString(),
         },
       });
     } catch (error) {

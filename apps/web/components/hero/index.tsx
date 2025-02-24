@@ -10,6 +10,7 @@ import { Conversation } from '../conversation';
 import { Countdown } from './countdown';
 import { GlobeLoading } from './globe-loading';
 import { Stats } from './stats';
+import { Logo } from './logo';
 
 const DynamicGlobe = dynamic(() => import('./globe').then((mod) => mod.Globe), {
   ssr: false,
@@ -48,9 +49,12 @@ export const LandingHero = ({
         transition={{ duration: 0.8 }}
         className="mb-8 w-full px-4 text-center"
       >
-        <h1 className="mb-3 font-bold text-4xl text-foreground md:text-5xl">
-          {t('title')}
-        </h1>
+        <div className="flex items-center justify-center gap-4 mb-3">
+          <Logo />
+          <h1 className="font-bold text-4xl text-foreground md:text-5xl">
+            {t('title')}
+          </h1>
+        </div>
         <p className="mx-auto mb-6 max-w-2xl text-lg text-muted-foreground">
           {t('description')}
         </p>
