@@ -2,7 +2,106 @@
 
 import { env } from '@/env';
 import { Loader } from '@googlemaps/js-api-loader';
+import { useTheme } from 'next-themes';
 import { useEffect, useRef, useState } from 'react';
+
+// Light theme map style
+const lightTheme = [
+  {
+    featureType: 'all',
+    elementType: 'geometry',
+    stylers: [{ color: '#f5f5f5' }],
+  },
+  {
+    featureType: 'water',
+    elementType: 'geometry',
+    stylers: [{ color: '#e9e9e9' }],
+  },
+  {
+    featureType: 'water',
+    elementType: 'labels.text.fill',
+    stylers: [{ color: '#9e9e9e' }],
+  },
+  {
+    featureType: 'road',
+    elementType: 'geometry',
+    stylers: [{ color: '#ffffff' }],
+  },
+  {
+    featureType: 'road.arterial',
+    elementType: 'labels.text.fill',
+    stylers: [{ color: '#757575' }],
+  },
+  {
+    featureType: 'road.highway',
+    elementType: 'geometry',
+    stylers: [{ color: '#dadada' }],
+  },
+  {
+    featureType: 'poi',
+    elementType: 'geometry',
+    stylers: [{ color: '#eeeeee' }],
+  },
+  {
+    featureType: 'poi.park',
+    elementType: 'geometry',
+    stylers: [{ color: '#e5e5e5' }],
+  },
+  {
+    featureType: 'poi.park',
+    elementType: 'labels.text.fill',
+    stylers: [{ color: '#9e9e9e' }],
+  },
+];
+
+// Dark theme map style
+const darkTheme = [
+  {
+    featureType: 'all',
+    elementType: 'geometry',
+    stylers: [{ color: '#242f3e' }],
+  },
+  {
+    featureType: 'water',
+    elementType: 'geometry',
+    stylers: [{ color: '#17263c' }],
+  },
+  {
+    featureType: 'water',
+    elementType: 'labels.text.fill',
+    stylers: [{ color: '#515c6d' }],
+  },
+  {
+    featureType: 'road',
+    elementType: 'geometry',
+    stylers: [{ color: '#38414e' }],
+  },
+  {
+    featureType: 'road.arterial',
+    elementType: 'geometry',
+    stylers: [{ color: '#746855' }],
+  },
+  {
+    featureType: 'road.highway',
+    elementType: 'geometry',
+    stylers: [{ color: '#746855' }],
+  },
+  {
+    featureType: 'poi',
+    elementType: 'geometry',
+    stylers: [{ color: '#283d4a' }],
+  },
+  {
+    featureType: 'poi.park',
+    elementType: 'geometry',
+    stylers: [{ color: '#3c5a3f' }],
+  },
+  {
+    featureType: 'poi.park',
+    elementType: 'labels.text.fill',
+    stylers: [{ color: '#6b9a76' }],
+  },
+];
 
 type GoogleMapProps = {
   location: {
@@ -26,6 +125,7 @@ export function GoogleMap({
   const [mapInstance, setMapInstance] = useState<google.maps.Map | null>(null);
   const [marker, setMarker] = useState<google.maps.Marker | null>(null);
   const [userMarker, setUserMarker] = useState<google.maps.Marker | null>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const initMap = async () => {
@@ -48,12 +148,21 @@ export function GoogleMap({
         center: votingLocation,
         zoom: 15,
         mapId: 'voter-assist-map',
+        styles: theme === 'dark' ? darkTheme : lightTheme,
+        disableDefaultUI: true,
+        zoomControl: true,
+        mapTypeControl: false,
+        scaleControl: true,
+        streetViewControl: false,
+        rotateControl: false,
+        fullscreenControl: true,
       });
 
       const locationMarker = new Marker({
         map: newMapInstance,
         position: votingLocation,
         title: location.name,
+        animation: google.maps.Animation.DROP,
       });
 
       setMapInstance(newMapInstance);
@@ -63,7 +172,16 @@ export function GoogleMap({
     if (!mapInstance) {
       initMap();
     }
-  }, [location, mapInstance]);
+  }, [location, mapInstance, theme]);
+
+  // Update map theme when theme changes
+  useEffect(() => {
+    if (mapInstance) {
+      mapInstance.setOptions({
+        styles: theme === 'dark' ? darkTheme : lightTheme,
+      });
+    }
+  }, [theme, mapInstance]);
 
   useEffect(() => {
     const calculateDistance = async () => {
@@ -98,12 +216,13 @@ export function GoogleMap({
           map: mapInstance,
           position: userLocation,
           title: 'Your Location',
+          animation: google.maps.Animation.DROP,
           icon: {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 8,
-            fillColor: '#4285F4',
+            fillColor: theme === 'dark' ? '#60a5fa' : '#3b82f6',
             fillOpacity: 1,
-            strokeColor: '#ffffff',
+            strokeColor: theme === 'dark' ? '#1e293b' : '#ffffff',
             strokeWeight: 2,
           },
         });
@@ -127,6 +246,7 @@ export function GoogleMap({
     location,
     userMarker,
     onDistanceCalculated,
+    theme,
   ]);
 
   return <div ref={mapRef} className="h-full w-full rounded-md" />;

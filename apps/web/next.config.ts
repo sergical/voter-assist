@@ -3,8 +3,13 @@ import { withToolbar } from '@repo/feature-flags/lib/toolbar';
 import { config, withAnalyzer } from '@repo/next-config';
 import { withLogtail, withSentry } from '@repo/observability/next-config';
 import type { NextConfig } from 'next';
+import createNextIntlPlugin from 'next-intl/plugin';
 
-let nextConfig: NextConfig = withToolbar(withLogtail({ ...config }));
+const withNextIntl = createNextIntlPlugin();
+
+let nextConfig: NextConfig = withNextIntl(
+  withToolbar(withLogtail({ ...config }))
+);
 
 nextConfig.images?.remotePatterns?.push({
   protocol: 'https',

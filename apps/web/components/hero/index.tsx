@@ -3,6 +3,7 @@
 import { ModeToggle } from '@repo/design-system/components/mode-toggle';
 import { differenceInSeconds } from 'date-fns';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { Conversation } from '../conversation';
@@ -20,6 +21,7 @@ const ELECTION_DATE = new Date('2025-02-27');
 export const LandingHero = ({
   initialLanguage,
 }: { initialLanguage: string }) => {
+  const t = useTranslations('HomePage');
   const [secondsLeft, setSecondsLeft] = useState(0);
 
   useEffect(() => {
@@ -47,16 +49,13 @@ export const LandingHero = ({
         className="mb-8 w-full px-4 text-center"
       >
         <h1 className="mb-3 font-bold text-4xl text-foreground md:text-5xl">
-          VoterAssist
+          {t('title')}
         </h1>
         <p className="mx-auto mb-6 max-w-2xl text-lg text-muted-foreground">
-          Your AI-powered guide to Ontario elections. Get instant, accurate
-          information about where, when, and how to vote in multiple languages.
+          {t('description')}
         </p>
         <div className="mb-4 flex flex-col items-center gap-2">
-          <p className="text-lg text-muted-foreground">
-            Ontario Provincial Election
-          </p>
+          <p className="text-lg text-muted-foreground">{t('electionTitle')}</p>
           <Countdown seconds={secondsLeft} />
         </div>
       </motion.div>

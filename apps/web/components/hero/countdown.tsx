@@ -1,11 +1,13 @@
 'use client';
 import NumberFlow, { NumberFlowGroup } from '@number-flow/react';
+import { useTranslations } from 'next-intl';
 
 type CountdownProps = {
   seconds: number;
 };
 
 export const Countdown = ({ seconds }: CountdownProps) => {
+  const t = useTranslations('HomePage.timeUnits');
   const dd = Math.floor(seconds / 86400);
   const hh = Math.floor((seconds % 86400) / 3600);
   const mm = Math.floor((seconds % 3600) / 60);
@@ -27,7 +29,7 @@ export const Countdown = ({ seconds }: CountdownProps) => {
             format={{ minimumIntegerDigits: 2 }}
             className="text-4xl text-foreground"
           />
-          <span className="text-muted-foreground text-sm">days</span>
+          <span className="text-muted-foreground text-sm">{t('days')}</span>
         </div>
         <div className="flex flex-col items-center">
           <NumberFlow
@@ -36,7 +38,7 @@ export const Countdown = ({ seconds }: CountdownProps) => {
             format={{ minimumIntegerDigits: 2 }}
             className="text-4xl text-foreground"
           />
-          <span className="text-muted-foreground text-sm">hours</span>
+          <span className="text-muted-foreground text-sm">{t('hours')}</span>
         </div>
         <div className="flex flex-col items-center">
           <div className="flex flex-col items-center">
@@ -46,7 +48,9 @@ export const Countdown = ({ seconds }: CountdownProps) => {
               format={{ minimumIntegerDigits: 2 }}
               className="text-4xl text-foreground"
             />
-            <span className="text-muted-foreground text-sm">minutes</span>
+            <span className="text-muted-foreground text-sm">
+              {t('minutes')}
+            </span>
           </div>
         </div>
         <div className="flex flex-col items-center">
@@ -57,7 +61,9 @@ export const Countdown = ({ seconds }: CountdownProps) => {
               format={{ minimumIntegerDigits: 2 }}
               className="text-4xl text-foreground"
             />
-            <span className="text-muted-foreground text-sm">seconds</span>
+            <span className="text-muted-foreground text-sm">
+              {t('seconds')}
+            </span>
           </div>
         </div>
       </div>

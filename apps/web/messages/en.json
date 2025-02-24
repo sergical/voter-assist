@@ -1,0 +1,47 @@
+{
+  "HomePage": {
+    "title": "VoterAssist",
+    "description": "Your AI-powered guide to Ontario elections. Get instant, accurate information about where, when, and how to vote in multiple languages.",
+    "electionTitle": "Ontario Provincial Election",
+    "voiceChat": "Voice chat",
+    "endChat": "End chat",
+    "connecting": "Connecting...",
+    "listening": "Listening...",
+    "speaking": "Assistant is speaking...",
+    "timeUnits": {
+      "days": "days",
+      "hours": "hours",
+      "minutes": "minutes",
+      "seconds": "seconds"
+    },
+    "stats": {
+      "title": "Why VoterAssist?",
+      "responseTime": {
+        "label": "Average Response Time",
+        "value": "2-3 minutes",
+        "comparison": "vs. 30+ minutes traditional research"
+      },
+      "accuracy": {
+        "label": "Information Accuracy",
+        "value": "98%",
+        "description": "verified with official sources"
+      },
+      "questions": {
+        "label": "Questions Answered",
+        "value": "1,000+",
+        "description": "from Ontario voters"
+      }
+    }
+  },
+  "Languages": {
+    "English": "English",
+    "Spanish": "Español",
+    "French": "Français",
+    "Russian": "Русский",
+    "Ukrainian": "Українська"
+  },
+  "Map": {
+    "distance": "Distance: {distance} km",
+    "votingLocation": "Voting Location"
+  }
+}
