@@ -13,7 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@repo/design-system/components/ui/dropdown-menu';
-import { Check, Phone, PhoneOff } from 'lucide-react';
+import { Check, MapPin, Phone, PhoneOff } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
@@ -34,11 +34,6 @@ const languages = [
     value: 'fr',
     label: 'Français',
     flag: '🇫🇷',
-  },
-  {
-    value: 'ru',
-    label: 'Русский',
-    flag: '🇷🇺',
   },
   {
     value: 'uk',
@@ -236,6 +231,14 @@ export function Conversation({
                     {t('voiceChat')}
                   </>
                 )}
+              </Button>
+
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-10 w-10 rounded-full border-input"
+              >
+                <MapPin className="h-5 w-5" />
               </Button>
 
               {/* Language Selector */}
