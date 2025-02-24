@@ -36,11 +36,6 @@ const languages = [
     flag: '🇫🇷',
   },
   {
-    value: 'ru',
-    label: 'Русский',
-    flag: '🇷🇺',
-  },
-  {
     value: 'uk',
     label: 'Українська',
     flag: '🇺🇦',
