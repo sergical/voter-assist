@@ -14,9 +14,9 @@ import {
   DropdownMenuTrigger,
 } from '@repo/design-system/components/ui/dropdown-menu';
 import { Check, Phone, PhoneOff } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { GoogleMap } from './map/google-map';
-
 const languages = [
   {
     value: 'en',
@@ -134,6 +134,7 @@ export function Conversation({
 }: {
   initialLanguage: string;
 }) {
+  const router = useRouter();
   const [selectedLanguage, setSelectedLanguage] = useState(() =>
     getDefaultLanguage(initialLanguage)
   );
@@ -267,7 +268,10 @@ export function Conversation({
                     <DropdownMenuItem
                       key={lang.value}
                       className="flex items-center gap-2"
-                      onSelect={() => setSelectedLanguage(lang)}
+                      onSelect={() => {
+                        setSelectedLanguage(lang);
+                        router.push(`/${lang.value}`);
+                      }}
                     >
                       <span className="text-xl">{lang.flag}</span>
                       <span className="flex-1">{lang.label}</span>

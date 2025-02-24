@@ -1,7 +1,10 @@
 'use client';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 export const Stats = () => {
+  const t = useTranslations('HomePage.stats');
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
@@ -11,32 +14,40 @@ export const Stats = () => {
     >
       <div className="rounded-xl border border-border bg-card bg-opacity-70 p-6 backdrop-blur">
         <h3 className="mb-4 font-semibold text-foreground text-xl">
-          Why VoterAssist?
+          {t('title')}
         </h3>
         <div className="grid gap-6">
           <div>
             <p className="text-muted-foreground text-sm">
-              Average Response Time
+              {t('responseTime.label')}
             </p>
-            <p className="font-bold text-2xl text-foreground">2-3 minutes</p>
+            <p className="font-bold text-2xl text-foreground">
+              {t('responseTime.value')}
+            </p>
             <p className="mt-1 text-muted-foreground text-sm">
-              vs. 30+ minutes traditional research
+              {t('responseTime.comparison')}
             </p>
           </div>
           <div>
             <p className="text-muted-foreground text-sm">
-              Information Accuracy
+              {t('accuracy.label')}
             </p>
-            <p className="font-bold text-2xl text-foreground">98%</p>
+            <p className="font-bold text-2xl text-foreground">
+              {t('accuracy.value')}
+            </p>
             <p className="mt-1 text-muted-foreground text-sm">
-              verified with official sources
+              {t('accuracy.description')}
             </p>
           </div>
           <div>
-            <p className="text-muted-foreground text-sm">Questions Answered</p>
-            <p className="font-bold text-2xl text-foreground">1,000+</p>
+            <p className="text-muted-foreground text-sm">
+              {t('questions.label')}
+            </p>
+            <p className="font-bold text-2xl text-foreground">
+              {t('questions.value')}
+            </p>
             <p className="mt-1 text-muted-foreground text-sm">
-              from Ontario voters
+              {t('questions.description')}
             </p>
           </div>
         </div>
