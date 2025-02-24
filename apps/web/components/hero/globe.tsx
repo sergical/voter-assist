@@ -1,6 +1,6 @@
 'use client';
 import { useTheme } from 'next-themes';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ReactGlobe, { type GlobeMethods } from 'react-globe.gl';
 
 type Marker = {
@@ -23,6 +23,24 @@ export const Globe = () => {
   const isDark = resolvedTheme === 'dark';
   const globeRef = useRef<GlobeMethods | undefined>(undefined);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [dimensions, setDimensions] = useState({ width: 992, height: 992 });
+
+  // Handle resize
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (containerRef.current) {
+        const width = containerRef.current.clientWidth;
+        // Make height responsive - smaller on mobile
+        const height = window.innerWidth < 768 ? width * 0.6 : width;
+        setDimensions({ width, height });
+      }
+    };
+
+    window.addEventListener('resize', updateDimensions);
+    updateDimensions();
+
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
 
   // Set initial position
   useEffect(() => {
@@ -30,7 +48,8 @@ export const Globe = () => {
       globeRef.current.pointOfView({
         lat: 51.2538,
         lng: -85.3232,
-        altitude: 2,
+        // Adjust altitude based on screen size
+        altitude: window.innerWidth < 768 ? 2.5 : 2,
       });
     }
   }, []);
@@ -44,8 +63,8 @@ export const Globe = () => {
             ? '//unpkg.com/three-globe/example/img/earth-dark.jpg'
             : '//unpkg.com/three-globe/example/img/earth-blue-marble.jpg'
         }
-        width={containerRef.current?.clientWidth || 992}
-        height={containerRef.current?.clientHeight || 992}
+        width={dimensions.width}
+        height={dimensions.height}
         backgroundColor="rgba(0,0,0,0)"
         pointsData={MARKERS}
         pointLat="lat"
