@@ -23,7 +23,7 @@ const languages = [
   {
     value: 'en',
     label: 'English',
-    flag: '🇺🇸',
+    flag: '🇨🇦',
   },
   {
     value: 'es',
