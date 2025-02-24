@@ -32,5 +32,16 @@
         "description": "от избирателей Онтарио"
       }
     }
+  },
+  "Languages": {
+    "English": "English",
+    "Spanish": "Español",
+    "French": "Français",
+    "Russian": "Русский",
+    "Ukrainian": "Українська"
+  },
+  "Map": {
+    "distance": "Расстояние: {distance} км",
+    "votingLocation": "Избирательный участок"
   }
 }

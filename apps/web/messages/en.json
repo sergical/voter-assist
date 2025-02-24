@@ -32,5 +32,16 @@
         "description": "from Ontario voters"
       }
     }
+  },
+  "Languages": {
+    "English": "English",
+    "Spanish": "Español",
+    "French": "Français",
+    "Russian": "Русский",
+    "Ukrainian": "Українська"
+  },
+  "Map": {
+    "distance": "Distance: {distance} km",
+    "votingLocation": "Voting Location"
   }
 }

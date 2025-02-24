@@ -32,5 +32,16 @@
         "description": "від виборців Онтаріо"
       }
     }
+  },
+  "Languages": {
+    "English": "English",
+    "Spanish": "Español",
+    "French": "Français",
+    "Russian": "Русский",
+    "Ukrainian": "Українська"
+  },
+  "Map": {
+    "distance": "Відстань: {distance} км",
+    "votingLocation": "Виборча дільниця"
   }
 }

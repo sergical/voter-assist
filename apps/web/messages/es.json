@@ -32,5 +32,16 @@
         "description": "de votantes de Ontario"
       }
     }
+  },
+  "Languages": {
+    "English": "English",
+    "Spanish": "Español",
+    "French": "Français",
+    "Russian": "Русский",
+    "Ukrainian": "Українська"
+  },
+  "Map": {
+    "distance": "Distancia: {distance} km",
+    "votingLocation": "Centro de Votación"
   }
 }

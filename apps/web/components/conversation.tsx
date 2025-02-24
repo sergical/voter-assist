@@ -14,9 +14,11 @@ import {
   DropdownMenuTrigger,
 } from '@repo/design-system/components/ui/dropdown-menu';
 import { Check, Phone, PhoneOff } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { GoogleMap } from './map/google-map';
+
 const languages = [
   {
     value: 'en',
@@ -70,6 +72,7 @@ function VotingLocationMap({
   isOpen: boolean;
   onClose: () => void;
 }) {
+  const t = useTranslations('Map');
   const [userLocation, setUserLocation] = useState<{
     lat: number;
     lng: number;
@@ -107,14 +110,13 @@ function VotingLocationMap({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>{location.name}</DialogTitle>
+          <DialogTitle>{t('votingLocation')}</DialogTitle>
         </DialogHeader>
         <div className="h-fit w-full">
           <p className="mb-2">{location.address}</p>
           <p className="mb-2 h-5 text-muted-foreground text-sm">
-            {location.distance && (
-              <>Distance: {location.distance.toFixed(1)} km</>
-            )}
+            {location.distance &&
+              t('distance', { distance: location.distance.toFixed(1) })}
           </p>
           <div className="h-[400px] w-full">
             <GoogleMap
@@ -135,6 +137,7 @@ export function Conversation({
   initialLanguage: string;
 }) {
   const router = useRouter();
+  const t = useTranslations('HomePage');
   const [selectedLanguage, setSelectedLanguage] = useState(() =>
     getDefaultLanguage(initialLanguage)
   );
@@ -163,7 +166,10 @@ export function Conversation({
   });
 
   const getSignedUrl = useCallback(async (): Promise<string> => {
-    const response = await fetch('/api/get-signed-url');
+    // Use absolute URL to bypass locale middleware
+    const response = await fetch(
+      `${window.location.origin}/api/get-signed-url`
+    );
     if (!response.ok) {
       throw new Error(`Failed to get signed url: ${response.statusText}`);
     }
@@ -195,19 +201,6 @@ export function Conversation({
     await conversation.endSession();
   }, [conversation]);
 
-  // Example voting location (replace with actual data from your backend)
-  const exampleLocation: VotingLocation = {
-    name: 'City Hall Voting Center',
-    address: '100 Queen Street West, Toronto, ON M5H 2N2',
-    latitude: 43.6534,
-    longitude: -79.3841,
-  };
-
-  const showVotingLocation = useCallback(() => {
-    setVotingLocation(exampleLocation);
-    setIsMapOpen(true);
-  }, []);
-
   return (
     <div className="mx-auto w-full max-w-[500px] p-4">
       <div className="rounded-3xl">
@@ -232,25 +225,15 @@ export function Conversation({
                 {conversation.status === 'connected' ? (
                   <>
                     <PhoneOff className="mr-2 h-5 w-5" />
-                    End chat
+                    {t('endChat')}
                   </>
                 ) : (
                   <>
                     <Phone className="mr-2 h-5 w-5" />
-                    Voice chat
+                    {t('voiceChat')}
                   </>
                 )}
               </Button>
-
-              {/* Map Button - don't show */}
-              {/* <Button
-                variant="outline"
-                size="icon"
-                className="h-10 w-10 rounded-full"
-                onClick={showVotingLocation}
-              >
-                <MapIcon className="h-5 w-5" />
-              </Button> */}
 
               {/* Language Selector */}
               <DropdownMenu>
@@ -290,13 +273,9 @@ export function Conversation({
         {(conversation.status !== 'disconnected' ||
           conversation.isSpeaking) && (
           <div className="mt-4 text-center text-muted-foreground text-sm">
-            {conversation.status === 'connecting' && <p>Connecting...</p>}
+            {conversation.status === 'connecting' && <p>{t('connecting')}</p>}
             {conversation.status === 'connected' && (
-              <p>
-                {conversation.isSpeaking
-                  ? 'Assistant is speaking...'
-                  : 'Listening...'}
-              </p>
+              <p>{conversation.isSpeaking ? t('speaking') : t('listening')}</p>
             )}
           </div>
         )}

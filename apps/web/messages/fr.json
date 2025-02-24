@@ -32,5 +32,16 @@
         "description": "des électeurs de l'Ontario"
       }
     }
+  },
+  "Languages": {
+    "English": "English",
+    "Spanish": "Español",
+    "French": "Français",
+    "Russian": "Русский",
+    "Ukrainian": "Українська"
+  },
+  "Map": {
+    "distance": "Distance : {distance} km",
+    "votingLocation": "Bureau de Vote"
   }
 }
