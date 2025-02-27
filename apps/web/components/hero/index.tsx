@@ -17,7 +17,10 @@ const DynamicGlobe = dynamic(() => import('./globe').then((mod) => mod.Globe), {
   loading: () => <GlobeLoading />,
 });
 
-const ELECTION_DATE = new Date('2025-02-27');
+// polls open at 9am EST/8am CST
+const ELECTION_DATE = new Date('2025-02-27T09:00:00').toLocaleString('default', {
+  timeZone: 'America/Toronto',
+});
 
 export const LandingHero = ({
   initialLanguage,
