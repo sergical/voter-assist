@@ -31,7 +31,7 @@ export const LandingHero = ({
   useEffect(() => {
     const updateCountdown = () => {
       const now = new Date();
-      const diffInSeconds = differenceInSeconds(ELECTION_DATE, now);
+      const diffInSeconds = differenceInSeconds(ELECTION_DATE, now) > 0 ? differenceInSeconds(ELECTION_DATE, now) : 0;
       setSecondsLeft(diffInSeconds);
     };
 
